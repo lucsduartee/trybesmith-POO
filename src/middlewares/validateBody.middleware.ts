@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ObjectSchema } from 'joi';
 
 const validatBody = (schema: ObjectSchema) => (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.body);
+  console.log('no validateBoody', req.body);
   
   const { error: err } = schema.validate(req.body);
 

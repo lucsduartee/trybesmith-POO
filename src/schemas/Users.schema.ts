@@ -8,7 +8,7 @@ enum Errors {
   CLASSE_STRING = '422|Classe must be a string',
   CLASSE_LENGTH = '422|Classe must be longer than 2 characters',
   LEVEL_REQUIRED = '400|Level is required',
-  LEVEL_STRING = '422|Level must be a number',
+  LEVEL_NUMBER = '422|Level must be a number',
   LEVEL_LENGTH = '422|Level must be greater than 0',
   PASSWORD_REQUIRED = '400|Password is required',
   PASSWORD_STRING = '422|Password must be a string',
@@ -16,24 +16,25 @@ enum Errors {
 }
 
 export default Joi.object({
-  username: Joi.string().min(2).required().messages({
-    'any.required': Errors.USERNAME_REQUIRED,
+  username: Joi.string().min(3).required().messages({
     'string.base': Errors.USERNAME_STRING,
     'string.min': Errors.USERNAME_LENGTH,
+    'any.required': Errors.USERNAME_REQUIRED,
   }),
-  classe: Joi.string().min(2).required().messages({
-    'any.required': Errors.CLASSE_REQUIRED,
+  classe: Joi.string().min(3).required().messages({
     'string.base': Errors.CLASSE_STRING,
     'string.min': Errors.CLASSE_LENGTH,
+    'any.required': Errors.CLASSE_REQUIRED,
   }),
-  level: Joi.number().positive().required().messages({
-    'any.required': Errors.LEVEL_REQUIRED,
-    'number.base': Errors.LEVEL_STRING,
-    'number.positive': Errors.LEVEL_LENGTH,
-  }),
-  password: Joi.string().min(7).required().messages({
-    'any.required': Errors.LEVEL_REQUIRED,
-    'string.base': Errors.LEVEL_STRING,
-    'string.min': Errors.LEVEL_LENGTH,
+  level: Joi.number().min(1).required()
+    .messages({
+      'any.required': Errors.LEVEL_REQUIRED,
+      'number.base': Errors.LEVEL_NUMBER,
+      'number.min': Errors.LEVEL_LENGTH,
+    }),
+  password: Joi.string().min(8).required().messages({
+    'any.required': Errors.PASSWORD_REQUIRED,
+    'string.base': Errors.PASSWORD_STRING,
+    'string.min': Errors.PASSWORD_LENGTH,
   }),
 });

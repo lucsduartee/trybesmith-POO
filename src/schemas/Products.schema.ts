@@ -7,7 +7,6 @@ enum Errors {
   AMOUNT_REQUIRED = '400|Amount is required',
   AMOUNT_STRING = '422|Amount must be a string',
   AMOUNT_LENGTH = '422|Amount must be longer than 2 characters',
-
 }
 
 export default Joi.object({
