@@ -1,9 +1,10 @@
-import { Pool, ResultSetHeader } from 'mysql2/promise';
+import { Pool, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import IUser from '../interfaces/User.interface';
 import connection from './connection';
 
 interface IUserModel {
   create: (user: IUser) => Promise<IUser>;
+  login: (user: IUser) => Promise<IUser[]>;
 }
 
 export default class UsersModel implements IUserModel {
@@ -25,5 +26,16 @@ export default class UsersModel implements IUserModel {
       id: data.insertId,
       ...user,
     };
+  };
+
+  login = async (user: IUser) => {
+    const { username, password } = user;
+    const query = 'SELECT * FROM '
+      + 'Trybesmith.Users WHERE username = ? AND password = ?';
+    const result = await this.connection
+      .execute<RowDataPacket[]>(query, [username, password]);
+
+    const [data] = result;
+    return data as IUser[];
   };
 }

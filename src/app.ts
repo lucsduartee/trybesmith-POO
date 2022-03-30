@@ -1,5 +1,6 @@
 import express from 'express';
 import errorHandler from './middlewares/error.middleware';
+import loginRoutes from './routes/Login.routes';
 import productsRoutes from './routes/Products.routes';
 import usersRoutes from './routes/Users.routes';
 
@@ -9,6 +10,7 @@ app.use(express.json());
 
 app.use('/products', productsRoutes);
 app.use('/users', usersRoutes);
+app.use('/login', loginRoutes);
 
 app.use(errorHandler);
 export default app;

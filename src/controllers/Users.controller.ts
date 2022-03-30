@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'; 
+import ErrorMessage from '../enums/ErrorMessage';
 import HttpStatusCode from '../enums/HttpStatusCode';
 import token from '../helpers/jwtGenerator';
 import UsersService from '../services/Users.service';
@@ -22,5 +23,17 @@ export default class UsersControllers {
     const tkn = token(created);
 
     return res.status(HttpStatusCode.CREATED).json({ token: tkn });
+  };
+
+  login = async (req: Request, res: Response) => {
+    const result = await this.usersService.login(req.body);
+    console.log('nocontroler', result);
+
+    if (result.length === 0) {
+      return res.status(HttpStatusCode.UNAUTHORIZED).json({ error: ErrorMessage.INVALID_LOGIN });
+    }
+
+    const tkn = token(result[0]);
+    return res.status(HttpStatusCode.OK).json({ token: tkn });
   };
 }
