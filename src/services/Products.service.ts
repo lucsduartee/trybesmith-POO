@@ -1,14 +1,18 @@
 import IProduct from '../interfaces/Product.interface';
 import ProductsModel from '../models/Products.model';
 
-export default class ProductsService {
+interface IProductsService {
+  getAll: () => Promise<IProduct[]>
+}
+
+export default class ProductsService implements IProductsService {
   private productsModel: ProductsModel;
 
   constructor() {
     this.productsModel = new ProductsModel();
   }
 
-  getAll = async (): Promise<IProduct[]> => {
+  getAll = async () => {
     const products = await this.productsModel.getAll();
     
     return products as IProduct[];

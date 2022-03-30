@@ -14,7 +14,7 @@ export default class ProductsModel implements IProductsModel {
   }
 
   getAll = async () => {
-    const query = 'SELECT * FROM Products';
+    const query = 'SELECT * FROM Trybesmith.Products';
 
     const result = await this.connection
       .execute<RowDataPacket[]>(query);
