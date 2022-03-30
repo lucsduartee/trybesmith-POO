@@ -27,7 +27,7 @@ export default class ProductsModel implements IProductsModel {
 
   create = async (product: IProduct) => {
     const { name, amount } = product;
-    const query = 'INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)';
 
     const result = await this.connection
       .execute<ResultSetHeader>(query, [name, amount]);
