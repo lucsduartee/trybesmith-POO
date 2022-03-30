@@ -53,7 +53,7 @@ afterAll(async () => {
 // Clean database before tests
 beforeAll(async () => { await recreateDatabase(); });
 
-describe.only("1 - Crie um endpoint para a listagem de produtos", () => {
+describe("1 - Crie um endpoint para a listagem de produtos", () => {
   beforeEach(async () => {
     await recreateDatabase();
   });

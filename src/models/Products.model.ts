@@ -1,9 +1,10 @@
-import { Pool, RowDataPacket } from 'mysql2/promise';
+import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 import connection from './connection';
 import IProduct from '../interfaces/Product.interface';
 
 interface IProductsModel {
-  getAll: () => Promise<IProduct[]>
+  getAll: () => Promise<IProduct[]>;
+  create: (product: IProduct) => Promise<IProduct>;
 }
 
 export default class ProductsModel implements IProductsModel {
@@ -22,5 +23,20 @@ export default class ProductsModel implements IProductsModel {
     const [rows] = result;
 
     return rows as IProduct[];
+  };
+
+  create = async (product: IProduct) => {
+    const { name, amount } = product;
+    const query = 'INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?, ?)';
+
+    const result = await this.connection
+      .execute<ResultSetHeader>(query, [name, amount]);
+
+    const [data] = result;
+
+    return {
+      id: data.insertId,
+      ...product,
+    };
   };
 }
